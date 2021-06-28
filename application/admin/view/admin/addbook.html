@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>新增图书</title>
+    <style type="text/css">
+        html{margin: 0; padding: 0;}
+        body{margin: 0 auto; padding: 0;max-width: 1200px; background: #f5f6f8;font-size: 14px;max-height: 800px;}
+        .m-header{position: relative; height: 0.8rem;line-height: 1rem; font-size:0.18rem;border-bottom:1px solid #EBEBEB; text-align: center;color: #2C2C2C;letter-spacing: 0;background: #fff;}
+        .m-return {position: absolute;display: inline-block;top:0.13rem;left: 0.12rem;width: 0.14rem; height: 0.3rem; background-image: url(http://c2.cgyouxi.com/website/mobile/img/arrow-l.png?v=20180122);background-size: 100% 100%;}
+        .m-view{background: #fff;height: 400px;}
+        .m-division{height: 1px; background:#EBEBEB;}
+        @media screen and (min-width: 360px) {
+            html {
+                font-size: 100px!important;
+            }
+        }
+    </style>
+
+</head>
+<body>
+{include file='public/anavigation'}
+<div class="m-header" id="m-header">
+    <div class="m-return" id="m-return"></div>
+    <h2>新增图书</h2>
+</div>
+<div class="m-division"></div>
+<div id="m-view">
+    <form  method="post" id="addbookform">
+        <input type="hidden" name="role" value="reader">
+        <table align="center" style="font-size:22px;border-collapse:separate;border-spacing:10px;">
+            <tr><th>书本ID：</th>
+                <td><input type="text" class="form-control" name="bookID"></td>
+            </tr>
+            <tr><th>ISBN：</th>
+                <td><input type="text" class="form-control" name="ISBN"></td>
+            </tr>
+            <tr><th>所属馆：</th>
+                <td><select name="branchID" >
+                    <option value="">-->请选择<--</option>
+
+                    <option value="L01">陈延奎图书馆</option>
+                    <option value="L02">嘉庚图书馆</option>
+                </select></td>
+            </tr>
+            <tr><th>借阅状态：</th>
+                <td><select name="readerstatus" >
+                    <option value="">-->请选择<--</option>
+
+                    <option value="1">可借阅</option>
+                    <option value="0">借阅中</option>
+                </select></td>
+            </tr>
+            <tr><th>详情：</th>
+                <td><input type="text" class="form-control" name="details"></td>
+            </tr>
+            <th></th>
+            <td><input type="button" value="添加" id="addbook">&nbsp;&nbsp;
+                <input type="reset" value="重置 "/>&nbsp;&nbsp;
+                <a href="{:url('admin/admin/ashowbooks')}">返回</a></td>
+            </tr>
+
+        </table>
+    </form>
+    {include file='public/apackage'}
+</div>
+
+</body>
+{include file='public/afunction'}
+<script>
+    //验证
+    $(function () {
+        $('#addbook').click(function () {
+
+            $.ajax({
+                url:"{:url('admin/admin/addbook')}",
+                type:'post',
+                data:$('#addbookform').serialize(),
+                datatype:'json',
+                success:function (data) {
+                    if(data.code==1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:1000
+                        },function () {
+                            //jump
+                            location.href=data.url;
+                        });
+                    }else{
+                        layer.open({
+                            title:"错误",
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        })
+                    }
+
+                }
+            })
+
+        })
+
+    })
+
+</script>
+</html>

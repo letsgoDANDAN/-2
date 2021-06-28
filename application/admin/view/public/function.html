@@ -1,0 +1,29 @@
+<script>
+    //搜索
+    $(function () {
+        $('#reset').click(function () {
+            $.ajax({
+                url:"{:url('admin/reader/reset')}",
+                type:'post',
+                data:{reset:'yse'},
+                datatype:'json',
+                success:function (data) {
+                    if(data.code==1){
+                            //jump
+                            location.href="{:url('admin/reader/showbooks')}";
+                    }else{
+                        layer.open({
+                            title:data,
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        })
+                    }
+
+                }
+            })
+
+        })
+    })
+
+</script>

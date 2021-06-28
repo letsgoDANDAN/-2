@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    {include file='public/loginhead'}
+</head>
+
+<body>
+
+    <div class="row clearfix">
+        <div class="col-md-1 column">
+        </div>
+        <div class="col-md-11 column">
+
+            <div class="m-header" id="m-header">
+                <div class="m-return" id="m-return"></div>
+                <h2>图书借阅系统</h2>
+            </div>
+            <div class="m-tab">
+                <a href="javascript:void(0);" id="m-my-invite" class="active">读者登录</a>
+                <a href="javascript:void(0);" id="m-my-coupons" class="m-coupons">管理员登录</a>
+                <div class="m-division"></div>
+            </div>
+
+            <div id="m-view1" class="m-view1">
+                <br> <br><br> <br><br> <br>
+                <form  id="loginform">
+                    <input type="hidden" name="type" value="reader">
+                    <table align="center" style="font-size:22px;border-collapse:separate;border-spacing:10px;">
+                        <tr><th>账号：</th>
+                            <td><input type="text" name="userid" placeholder="请输入用户名"></td>
+                        </tr>
+                        <tr><th>密码：</th>
+                            <td><input type="password" name="password" placeholder="请输入密码">
+                            </td>
+                        <tr><th>验证码：</th>
+                            <td><input type="text" name="captcha" id="captcha" placeholder="请输入验证码"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td><img id="captchaImg" src="{:captcha_src()}" alt="captcha"/></td></tr>
+                        <tr><th></th>
+                            <td><input type="button" value="登录" id="login">&nbsp;&nbsp;&nbsp;
+                                <input type="reset" value="重置 "/></td>
+                        </tr>
+                    </table>
+                    <p align="center" style="font-size:16px;">
+                        还没有账户？快来<a href="{:url('admin/user/register')}">注册</a>吧！
+                    </p>
+                </form>
+            </div>
+            <div id="m-view2" class="m-view2" style="display: none;">
+
+                <br> <br><br> <br><br> <br>
+                <form id="loginform_2">
+                    <input type="hidden" name="type" value="admin">
+                    <table align="center" style="font-size:22px;border-collapse:separate;border-spacing:10px;">
+                        <tr><th>账号：</th>
+                            <td><input type="text" name="userid" placeholder="请输入用户名"></td>
+                        </tr>
+                        <tr><th>密码：</th>
+                            <td><input type="password" name="password" placeholder="请输入密码">
+                            </td></tr>
+                        <tr><th>验证码：</th>
+                            <td><input type="text" name="captcha" id="?" placeholder="请输入验证码"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td><img id="captchaImg" src="{:captcha_src()}" alt="captcha"/></td></tr>
+                        <tr><th></th>
+                            <td><input type="button" value="登录" id="login2">&nbsp;&nbsp;&nbsp;
+                                <input type="reset" value="重置 "/></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+
+        </div></div>
+{include file='public/package'}
+
+<script type="text/javascript">
+
+    $('#m-return').on('click', function() {
+        window.history.back()
+    });
+    var myCoupons = $('#m-my-coupons');
+    var myInvite = $('#m-my-invite');
+    var view1 = $('#m-view1');
+    var view2 = $('#m-view2');
+    $('#m-return').on('click', function() {
+        window.history.back()
+    });
+    myInvite.on('click', function() {
+        myCoupons.removeClass('active');
+        myInvite.addClass('active');
+        view2.hide();
+        view1.show();
+    });
+    myCoupons.on('click', function() {
+        myInvite.removeClass('active');
+        myCoupons.addClass('active');
+        view1.hide();
+        view2.show();
+    });
+</script>
+
+<script>
+    //验证登录
+    $(function () {
+        $('#login').click(function () {
+
+            $.ajax({
+                url:"{:url('admin/user/login')}",
+                type:'post',
+                data:$('#loginform').serialize(),
+                datatype:'json',
+                success:function (data) {
+                    if(data.code==1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:1000
+                        },function () {
+                            //jump
+                            location.href=data.url;
+                        });
+                    }else{
+                        layer.open({
+                            title:"错误",
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        })
+                    }
+
+                }
+            })
+
+        })
+
+        $('#login2').click(function () {
+
+            $.ajax({
+                url:"{:url('admin/user/login')}",
+                type:'post',
+                data:$('#loginform_2').serialize(),
+                datatype:'json',
+                success:function (data) {
+                    if(data.code==1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:1000
+                        },function () {
+                            //jump
+                            location.href=data.url;
+                        });
+                    }else{
+                        layer.open({
+                            title:"错误",
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        })
+                    }
+
+                }
+            })
+
+        })
+
+    })
+</script>
+</body>
+
+<!--  /Body -->
+</html>

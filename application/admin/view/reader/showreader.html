@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+{include file='public/navigation'}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title">书卷人生<span class="glyphicon glyphicon-leaf pull-right"></span></h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover table-striped table-bordered" >
+                        <thead>
+                        <tr>
+                            <th bgcolor="black" colspan="2"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th bgcolor="#00bfff">用户名</th>
+                            <td align="center">{$reader.userid}</td></tr>
+                        <tr><th bgcolor="#00bfff">单位</th>
+                            <td align="center">{$unit.unitname}</td></tr>
+                        <tr><th bgcolor="#00bfff">读者类型</th>
+                            <td align="center">{$type.readertypename}</td></tr>
+                        <tr>
+                            <th bgcolor="#00bfff">姓名</th>
+                            <td align="center">
+                                {$reader.name}</td></tr>
+                        <tr><th bgcolor="#00bfff">E-mail</th>
+                            <td align="center">
+                                {$reader.Email}</td></tr>
+                        <tr><th bgcolor="#00bfff">联系方式</th>
+                            <td align="center">
+                                {$reader.phone}
+                            </td></tr>
+                        <tr>
+                            <th bgcolor="#00bfff">用户状态</th>
+                            {if condition="$reader.borrowstatus == '1'"}
+                            <td align="center" bgcolor="green"><font color="#F0F8FF" face="黑体" >正常</font></td>
+                            {else/}
+                            <td align="center" bgcolor="red"><font color="#F0F8FF" face="黑体" >黑名单</font></td>
+                            {/if}
+                        </tr>
+                        <tr><th bgcolor="#00bfff">中文书籍借阅数量</th>
+                            <td align="center">
+                                {$reader.cbooknumber}
+                            </td></tr>
+                        <tr><th bgcolor="#00bfff">外文书籍借阅数量</th>
+                            <td align="center">
+                                {$reader.fbooknumber}
+                            </td></tr>
+                        <tr><th bgcolor="#00bfff">总借阅数量</th>
+                            <td align="center">
+                                {$reader.booknumber}
+                        </tr>
+                        <tr><th>
+                        </th>
+                            <td align="center"><button onclick="window.location.href='{:url(\'admin/reader/updatemyself\')}'" class="btn"><font class="btn1">修改信息</font></button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{include file='public/package'}
+{include file='public/function'}
+</html>
+

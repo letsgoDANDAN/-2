@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+{include file='public/anavigation'}
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title">借阅记录<span class="glyphicon glyphicon-leaf pull-right"></span></h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover table-striped table-bordered" style="margin-top: 10px">
+                        <thead>
+                        <tr>
+                            <th>用户ID</th>
+                            <th>书本ID</th>
+                            <th>借阅时间</th>
+                            <th>归还时间</th>
+                            <th>是否续接</th>
+                            <th>是否归还</th>
+                            <th>时间</th>
+                            <th class="text-center">修改</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name='borrowlist' id='borrow'}
+                        <tr>
+                            <td>{$borrow.userid}</td>
+                            <td>{$borrow.bookID}</td>
+                            <td>{$borrow.borrowingtime}</td>
+                            <td>{$borrow.returntime}</td>
+                            <td>{$borrow.renewstatus}</td>
+                            <td>{$borrow.returnstatus}</td>
+                            <td>{$borrow.time}</td>
+                            <td class="text-center"><a href="{:url('admin/admin/editborrow',['bookID'=>$borrow.bookID])}" class="btn btn-primary btn-sm">修改</a></td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation">
+
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+
+        {include file='public/apackage'}
+    </div>
+</div>
+</body>
+{include file='public/afunction'}
+</html>
+

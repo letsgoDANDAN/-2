@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>注册</title>
+</head>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<body>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+<div class="jumbotron">
+    <h1>
+        图书馆阅览须知
+    </h1>
+    <p>
+        一、图书馆阅览室为开架阅览，对全体师生开放。<br>
+
+        二、读者一律凭本人借书证进入阅览室，在服务台自取代书板后方可选书。读者的书、包等个人物品不能带入阅览室。<br>
+
+        三、读者在选书时，一律要用代书板，先将代书板放在所取图书的相应位置，然后取书（每次只能抽取一本书），不可乱放；阅后将书放回原位（代书板所在的位置），以免乱架。<br>
+
+        四、读者未办理借书手续，不得擅自将书刊带出阅览室。<br>
+
+        五、不得圈划、污损、撕页书刊。<br>
+
+        六、不准大声喧哗，禁止吸烟、吃零食，并将手机等通讯工具调至静音，禁止在阅览区域内接打电话。<br>
+
+        七、爱护室内财产，严禁在桌面上乱写乱刻。<br>
+
+        八、读者应遵守阅览室规章制度，有违反上述规则者，阅览室管理人员有权进行提醒及批评教育，并按规定作相应处理。<br>
+
+        九、本规定由图书馆负责解释。<br>
+
+        十、本规定自公布之日起施行。<br>
+    </p>
+</div>
+<form class="form-horizontal" role="form" action="{:url('admin/user/doregister')}" method="post">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" type="text">用户名：</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="userid" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">密码：</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" name="password"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" type="text">昵称：</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="name" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" type="text">邮箱：</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control"  name="Email"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" type="text">手机号：</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="phone" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">所在学校：</label>
+        <div class="col-sm-10">
+            <select name="unitID" class="form-control">
+
+                {volist name='unit' id='unit'}
+                <option value="{$unit.unitID}">{$unit.unitname}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label  class="col-sm-2 control-label">读者类型：</label>
+        <div class="col-sm-10">
+            <select name="readertypeID" class="form-control">
+                {volist name='rt' id='rt'}
+                <option value="{$rt.readertypeID}">{$rt.readertypename}</option>
+                {/volist}
+            </select>
+        </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <br><br>
+            <button type="submit" class="btn btn-default">注册</button>
+        </div>
+    </div>
+    </div>
+</form>
+        </div></div></div>
+</body>
+
+</html>

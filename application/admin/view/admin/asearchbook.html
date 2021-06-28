@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+{include file='public/anavigation'}
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title">天道酬勤 书海无涯<span class="glyphicon glyphicon-leaf pull-right"></span></h3>
+                </div>
+                <div class="panel-body">
+                    <a href="{:url('admin/reader/borrowbook')}" class="btn btn-success">新增图书</a>
+                    <table class="table table-hover table-striped table-bordered" style="margin-top: 10px">
+                        <thead>
+                        <tr>
+                            <th>ISBN</th>
+                            <th>封面</th>
+                            <th>书名</th>
+                            <th>价格</th>
+                            <th>简介</th>
+                            <th class="text-center">操作</th>
+                            <th class="text-center">修改</th>
+                            <th class="text-center">删除</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {volist name='booklist' id='book'}
+                        <tr>
+                            <td>{$book.ISBN}</td>
+                            <td><img src="/static/img/{$book.picture}.jpg" width="120px" height="100px" /></td>
+                            <td>{$book.bookname}</td>
+                            <td>{$book.price}</td>
+                            <td>{$book.introduce}</td>
+                            <td class="text-center"><a href="{:url('admin/reader/showbook',['ISBN'=>$book.ISBN])}" class="btn btn-primary btn-sm">查看</a></td>
+                            <td class="text-center"><a href="{:url('admin/reader/showbook',['ISBN'=>$book.ISBN])}" class="btn btn-primary btn-sm">修改</a></td>
+                            <td class="text-center"><a href="{:url('admin/reader/showbook',['ISBN'=>$book.ISBN])}" class="btn btn-primary btn-sm">删除</a></td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation">
+                        {$booklist|raw}
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+
+        {include file='public/apackage'}
+    </div>
+</div>
+</body>
+{include file='public/afunction'}
+</html>
+

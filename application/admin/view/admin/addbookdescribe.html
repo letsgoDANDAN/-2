@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>新增图书描述</title>
+    <style type="text/css">
+        html{margin: 0; padding: 0;}
+        body{margin: 0 auto; padding: 0;max-width: 1200px; background: #f5f6f8;font-size: 14px;max-height: 800px;}
+        .m-header{position: relative; height: 0.8rem;line-height: 1rem; font-size:0.18rem;border-bottom:1px solid #EBEBEB; text-align: center;color: #2C2C2C;letter-spacing: 0;background: #fff;}
+        .m-return {position: absolute;display: inline-block;top:0.13rem;left: 0.12rem;width: 0.14rem; height: 0.3rem; background-image: url(http://c2.cgyouxi.com/website/mobile/img/arrow-l.png?v=20180122);background-size: 100% 100%;}
+        .m-view{background: #fff;height: 400px;}
+        .m-division{height: 1px; background:#EBEBEB;}
+        @media screen and (min-width: 360px) {
+            html {
+                font-size: 100px!important;
+            }
+        }
+    </style>
+
+</head>
+<body>
+{include file='public/anavigation'}
+<div class="m-header" id="m-header">
+    <div class="m-return" id="m-return"></div>
+    <h2>新增图书描述</h2>
+</div>
+<div class="m-division"></div>
+<div id="m-view">
+    <form  method="post" id="addbookdescribeform">
+        <input type="hidden" name="role" value="reader">
+        <table align="center" style="font-size:22px;border-collapse:separate;border-spacing:10px;">
+            <tr><th>ISBN：</th>
+                <td><input type="text" class="form-control" name="ISBN"></td>
+            </tr>
+            <tr><th>序列ID：</th>
+                <td><input type="text" class="form-control" name="sonID">
+                </td>
+            <tr>
+            <tr><th>出版商：</th>
+                <td><select name="publicID" >
+                    <option value="">-->请选择<--</option>
+
+                    <option value="P01">清华大学出版社</option>
+                    <option value="P02">北京大学出版社</option>
+                    <option value="P03">南方出版社</option>
+                    <option value="P04">华北出版社</option>
+                    <option value="P1">天堂出版社</option>
+                </select></td>
+            </tr>
+            <tr><th>书本类型：</th>
+                <td><select name="borrowtypeID" >
+                    <option value="">-->请选择<--</option>
+
+                    <option value="BT01">中文图书</option>
+                    <option value="BT02">外文图书</option>
+                    <option value="BT03">短期图书</option>
+                </select></td>
+            </tr>
+            <tr><th>书名：</th>
+                <td><input type="text" class="form-control" name="bookname"></td>
+            </tr>
+            <tr><th>价格：</th>
+                <td><input type="text" class="form-control" name="price"></td>
+            </tr>
+            <tr><th>介绍：</th>
+                <td><input type="text" class="form-control" name="introduce"></td>
+            </tr>
+            <tr><th>图片：</th>
+                <td><input type="text" class="form-control" name="picture"></td>
+            </tr>
+                <th></th>
+                <td><input type="button" value="添加" id="addbookdescribe">&nbsp;&nbsp;
+                    <input type="reset" value="重置 "/>&nbsp;&nbsp;
+                    <a href="{:url('admin/admin/ashowbooks')}">返回</a></td>
+            </tr>
+
+        </table>
+    </form>
+    {include file='public/apackage'}
+</div>
+
+</body>
+{include file='public/afunction'}
+<script>
+    //验证
+    $(function () {
+        $('#addbookdescribe').click(function () {
+
+            $.ajax({
+                url:"{:url('admin/admin/addbookdescribe')}",
+                type:'post',
+                data:$('#addbookdescribeform').serialize(),
+                datatype:'json',
+                success:function (data) {
+                    if(data.code==1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:1000
+                        },function () {
+                            //jump
+                            location.href=data.url;
+                        });
+                    }else{
+                        layer.open({
+                            title:"错误",
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        })
+                    }
+
+                }
+            })
+
+        })
+
+    })
+
+</script>
+</html>

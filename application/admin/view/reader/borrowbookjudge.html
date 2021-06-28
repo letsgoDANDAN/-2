@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>图书详情</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+{include file='public/navigation'}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title">天道酬勤 书海无涯<span class="glyphicon glyphicon-leaf pull-right"></span></h3>
+                </div>
+                <div class="panel-body">
+                    {if condition="$tip!=null"}
+                    <div class="alert alert-dismissable alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4>
+                            该书籍目前不可借阅
+                        </h4> <strong>原因：</strong> {$tip}
+                    </div>
+                    {else/}
+                    <div class="alert alert-dismissable alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4>
+                            该书目前可借阅
+                        </h4> <strong>恭喜！</strong> 请您确定书籍详情。
+                    </div>
+                    {/if}
+                    <table class="table table-hover table-striped table-bordered" style="text-align: center">
+                        <tr>
+                            <th bgcolor="#00FFFF">图书编号</th>
+                            <td align="center">{$b.bookID}</td></tr>
+                        <tr>
+                            <th bgcolor="#00FFFF">ISBN</th>
+                            <td align="center">{$book.ISBN}</td></tr>
+                        <tr><th bgcolor="#00FFFF">书名</th>
+                            <td align="center">{$book.bookname}</td></tr>
+                        <tr><th bgcolor="#00FFFF">封面</th>
+                            <td align="center"><img src="/static/img/{$book.picture}.jpg" width="200px" height="260px"></td></tr>
+                        <tr><th bgcolor="#00FFFF">分类</th>
+                            <td align="center">{$booktype.categoryname}</td></tr>
+                        <tr><th bgcolor="#00FFFF">作者</th>
+                            <td align="center">{$author}</td></tr>
+                        <tr>
+                            <th bgcolor="#00FFFF">出版社</th>
+                            <td align="center">
+                                {$press.publicname}</td></tr>
+                        <tr><th bgcolor="#00FFFF">单价</th>
+                            <td align="center">
+                                {$book.price}
+                            </td></tr>
+                        <tr>
+                            <th bgcolor="#00FFFF">简介</th>
+                            <td align="center" height="100px">{$book.introduce}</td>
+                        </tr>
+                    </table>
+                    <h4 align="center"><font color="#CD5C5C">根据您的情况，提供如下借阅条件：</font></h4>
+                    <table class="table table-hover table-striped table-bordered" align="center" border="0" width=1000px bgcolor="#FFF8DC">
+                        <thead>
+                        <tr><th align="center" bgcolor="#FFD700">借阅上限（本）</th><th align="center" bgcolor="#FFD700">借阅期限（天）</th><th align="center" bgcolor="#FFD700">续借期限（天）</th></tr></thead>
+                        <tbody>
+                        <tr><th>{$bc.borrownum}</th> <th>{$bc.borrowtime}</th> <th>{$bc.renewtime}</th>
+                        </tr>
+                        <tr>
+                        </tr></tbody>
+                    </table>
+                    {if condition="$tip==null"}
+                    <h1 align="center"><button type="button" class="btn btn-success btn-default btn-block" onclick="window.location.href='{:url(\'admin/reader/borrownotice\',[\'ID\'=>$b.bookID])}'">确认借阅</button></h1>
+                    {else/}
+                    <h1 align="center"><button type="button" class="btn btn-success btn-default btn-block" disabled="disabled">不可借阅</button></h1>
+                    {/if}
+                </div>
+            </div>
+        </div>
+
+        {include file='public/package'}
+    </div>
+</div>
+</body>
+{include file='public/function'}
+</html>
+

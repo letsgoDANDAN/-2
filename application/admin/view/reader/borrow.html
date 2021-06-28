@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>借阅</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+   {include file='public/navigation'}
+   <div class="container">
+       <div class="row">
+           <div class="col-md-2">
+               <div class="list-group">
+                   <a href="{:url('admin/reader/borrow',['key'=>'3'])}" class="list-group-item active">
+                       全部信息
+                   </a>
+                   <a href="{:url('admin/reader/borrow',['key'=>'0'])}" class="list-group-item">借阅中</a>
+                   <a href="{:url('admin/reader/borrow',['key'=>'2'])}" class="list-group-item">逾期中</a>
+                   <a href="{:url('admin/reader/borrow',['key'=>'1'])}" class="list-group-item">已归还</a>
+
+               </div>
+           </div>
+           <div class="col-md-10">
+               <div class="panel panel-primary">
+                   <div class="panel-heading clearfix">
+                       <h3 class="panel-title">有借有还 再借不难<span class="glyphicon glyphicon-leaf pull-right"></span></h3>
+                   </div>
+                   <div class="panel-body">
+                       <a href="{:url('admin/reader/borrowbook')}" class="btn btn-success">我要借阅</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                       <a href="{:url('admin/reader/borrowreport',['time'=>'2021'])}" class="btn btn-success">查看报表</a>
+                       <table class="table table-hover table-striped table-bordered" style="margin-top: 10px">
+                           <thead>
+                           <tr><th>ISBN</th><th>书名</th><th>借阅日期</th><th>应还日期</th><th>实还日期 </th><th>图书馆</th><th class="text-center" colspan="2">操作</th>
+                           </tr>
+                           </thead>
+                           {volist name='borrowlist' id='vo'}
+                           <tr><td>{$vo.ISBN}</td><td>{$vo.bookname}</td><td>{$vo.borrowingtime}</td>
+                               <td>{if condition="$vo.returntime<$vo.time||($vo.returnstatus=='0'&& $vo.returntime<$time)"}
+                                   <font color="red">{$vo.returntime}</font>
+                                   {else/}
+                                   <font color="green">{$vo.returntime}</font>
+                                   {/if}</td>
+                               <td>
+                                   {if condition="$vo.returnstatus=='1'"}
+                                   {$vo.time}
+                                   {else/}
+                                   尚未归还
+                                   {/if}</td>
+                               <td>{$vo.branchname}</td>
+                               <td>
+                                   {if condition="$vo.renewstatus=='0'||$vo.returnstatus=='1'"}
+                                   <a class="btn btn-primary btn-sm" disabled="disabled">续借</a>
+                                   {else/}
+                                   <a class="btn btn-primary btn-sm" id="renew" href="{:url('admin/reader/renewbook',['bookID'=>$vo.bookID,'bS'=>$vo.returnstatus])}">续借</a>
+                                   {/if}</td>
+                               <td>{if condition="$vo.returnstatus=='1'"}
+                                   <a class="btn btn-primary btn-sm" disabled="disabled">归还</a>
+                                   {else/}
+                                   <a class="btn btn-primary btn-sm" href="{:url('admin/reader/returnbook',['bookID'=>$vo.bookID,'bS'=>$vo.returnstatus])}">归还</a>
+                                   {/if}
+                               </td>
+                           </tr>
+                           {/volist}
+                       </table>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+{include file='public/function'}
+</body>
+
+<script>
+    //验证登录
+    $(function () {
+        $('#renew').click(function () {
+
+            $.ajax({
+                url:"{:url('admin/reader/renewbook')}",
+                type:'post',
+                data:$('#borrowform').serialize(),
+                datatype:'json',
+                success:function (data) {
+                    if(data.code==1){
+                        layer.msg(data.msg,{
+                            icon:6,
+                            time:1000
+                        },function () {
+                            //jump
+                            location.href=data.url;
+                        });
+                    }else{
+                        layer.open({
+                            title:"错误",
+                            content:data.msg,
+                            icon:5,
+                            anim:6
+                        })
+                    }
+                }
+            })
+        })
+    })
+</script>
+
+
+</html>

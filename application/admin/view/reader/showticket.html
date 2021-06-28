@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>罚款</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+{include file='public/navigation'}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading clearfix">
+                    <h3 class="panel-title">吃一堑，长一智<span class="glyphicon glyphicon-leaf pull-right"></span></h3>
+                </div>
+                <div class="panel-body">
+
+                    <h3 align="center"><a href="{:url('admin/reader/showticket',['key'=>'0'])}">待处理</a>/<a href="{:url('admin/reader/showticket',['key'=>'1'])}">已处理</a></h3>
+                    <br><br>
+                    <div style="width: 1000px;text-align: center;position: relative;left: 100px">
+                        {volist name='ticketlist' id='vo'}
+                        <div class="panel panel-default" >
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                       href="#collapseOne">
+                                        罚单编号：{$vo.fineid}&nbsp;&nbsp;罚单类型：{$vo.finetypename}&nbsp;&nbsp;罚金:{$vo.totalfineprice}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body">
+                                    详情：{$vo.finedetail}<br>
+                                    {if condition="$vo.settlestatus=='0'"}
+                                    <a href="{:url('admin/reader/pay',['ID'=>$vo.fineid])}">支付罚金</a>{/if}
+                                </div>
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+</body>
+{include file='public/function'}
+</html>
+
